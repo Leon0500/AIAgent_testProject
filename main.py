@@ -1,5 +1,6 @@
 import os
 import argparse
+from prompts import system_prompt
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -17,7 +18,8 @@ def main():
 
     #Adding conversation memory
     messages = [
-        {"role": "user", "content": args.user_prompt}
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": args.user_prompt},
     ]
 
     #Actual AI-Agent stuff

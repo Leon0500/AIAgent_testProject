@@ -1,5 +1,19 @@
 import os
 
+def get_file_metadata(target_path: str, contents: list[str]) -> list[str]:
+    content_metadata = []
+    for content in contents:
+        try:
+            file_size = os.path.getsize(f"{target_path}/{content}")
+        except Exception as e:
+            file_size = "Error: failed to get file size"
+        try:
+            is_dir = "True" if os.path.isdir(f"{target_path}/{content}") else "False"
+        except:
+            is_dir = "Error: failed to check for directory"
+        content_metadata.append(f"\t- {content}: file_size={file_size} bytes, is_dir={is_dir}")
+    return content_metadata
+
 
 def get_files_info(working_directory: str, directory: str) -> str:
     try:
@@ -11,6 +25,10 @@ def get_files_info(working_directory: str, directory: str) -> str:
         if os.path.isdir(target_dir) == False:
             return f"Error \"{directory}\" is not a directory"
         else:
-            return f"Success: \"{directory}\" is within the working directory"
+            contents = os.listdir(target_dir)
+            content_metadata = get_file_metadata(target_dir, contents)
+            content_metadata_joined = "\n".join(content_metadata)
+            return f"Result for \'{directory}\' directory: \n" + content_metadata_joined
+
     except Exception as e:
-        print(e)
+        return e
