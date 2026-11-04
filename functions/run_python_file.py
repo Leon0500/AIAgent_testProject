@@ -1,7 +1,27 @@
 import os
 import subprocess
 
-
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Executes a specified python file relative to the working directory (default is working directory), accepting arguments to be passsed to the python file.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to target file that will be executed, relative to the working directory.",
+                },
+                "args": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "Optional paramater to pass arguments to the python file when executing it",
+                },
+            },
+        },
+    },
+}
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
     try:
         working_dir_abs = os.path.abspath(working_directory)

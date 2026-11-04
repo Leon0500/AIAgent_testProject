@@ -1,6 +1,25 @@
 import os
 
-
+schema_write_file = {
+    "type": "function",
+    "function": {
+        "name": "write_file",
+        "description": "Writes to a specified target file relative to the working directory (default is working directory). If the file doesnt exist it is created.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to target file, relative to the working directory.",
+                },
+                "content": {
+                    "type": "string",
+                    "description": "content written to target file",
+                },
+            },
+        },
+    },
+}
 def write_file(working_directory: str, file_path: str, content: str) -> str:
     try:
         working_dir_abs = os.path.abspath(working_directory)

@@ -14,9 +14,26 @@ def get_file_metadata(target_path: str, contents: list[str]) -> list[str]:
         content_metadata.append(f"\t- {content}: file_size={file_size} bytes, is_dir={is_dir}")
     return content_metadata
 
-
-def get_files_info(working_directory: str, directory: str) -> str:
+schema_get_files_info = {
+    "type": "function",
+    "function": {
+        "name": "get_files_info",
+        "description": "Lists files in a specified directory relative to the working directory, providing file size and directory status",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "directory": {
+                    "type": "string",
+                    "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
+                },
+            },
+        },
+    },
+}
+def get_files_info(working_directory: str, directory: str = "working_dir") -> str:
     try:
+        if directory == "working_dir":
+            directory = working_directory
         working_dir_abs = os.path.abspath(working_directory)
         combined_path = os.path.join(working_dir_abs, directory)
         target_dir = os.path.normpath(combined_path)

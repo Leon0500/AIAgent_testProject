@@ -3,7 +3,22 @@ import os
 MAX_CHARACTERS_TO_READ = 10000
 
 
-
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Reads up to 10000 characters of a specified relative to the working directory",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to target file, relative to the working directory.",
+                },
+            },
+        },
+    },
+}
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
         content: str = ""
